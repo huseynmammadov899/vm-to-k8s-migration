@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/05-internetsiz-build.md)
+
 # 5. Builds in an air-gapped network
 
 ## Symptom

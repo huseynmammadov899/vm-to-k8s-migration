@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](README.az.md)
+
 # VM → Kubernetes Migration: 5 Problems I Hit (and How I Fixed Them)
 
 Real-world lessons from moving Java integration services (Spring Boot and Tomcat/WAR apps) from

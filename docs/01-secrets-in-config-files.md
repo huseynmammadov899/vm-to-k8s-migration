@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/01-konfiqdeki-sirler.md)
+
 # 1. Secrets lived in config files
 
 ## Symptom

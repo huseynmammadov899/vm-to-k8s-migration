@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/02-gizli-host-asililiqlari.md)
+
 # 2. Hidden `/etc/hosts` dependencies
 
 ## Symptom

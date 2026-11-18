@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/kocurme-checklist.md)
+
 # Per-service migration checklist
 
 Copy this into the merge request description for each service.

@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/04-host-header-kecid.md)
+
 # 4. Host header and ingress routing at cutover
 
 ## Symptom

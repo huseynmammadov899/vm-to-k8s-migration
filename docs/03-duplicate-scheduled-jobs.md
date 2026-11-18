@@ -1,3 +1,5 @@
+**English** | [Azərbaycanca](az/03-tekrarlanan-scheduled-joblar.md)
+
 # 3. Scheduled jobs ran twice
 
 ## Symptom

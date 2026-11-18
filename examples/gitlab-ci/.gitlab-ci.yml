@@ -1,0 +1,43 @@
+# Per-service pipeline. All job logic lives in a shared templates project,
+# so each service only sets variables (see docs/05).
+include:
+  - project: platform/ci-templates
+    ref: v1
+    file:
+      - /pipelines/java-build.yml
+      - /pipelines/image.yml
+      - /pipelines/deploy.yml
+
+stages:
+  - build
+  - image
+  - deploy
+
+default:
+  tags:
+    - offline-runner          # runner without internet access
+
+variables:
+  SERVICE_KEY: orders-api     # key in the GitOps versions file
+  MAVEN_BUILD_IMAGE: "nexus.example.internal:8082/maven:3.9-eclipse-temurin-8"
+  MAVEN_ARGS: "-s ci-settings.xml"            # CLI args, NOT MAVEN_OPTS
+  MAVEN_OPTS: "-Dspring.profiles.active=test" # JVM/system properties only
+
+# Example of what the shared templates do (simplified):
+#
+# build:
+#   stage: build
+#   image: $MAVEN_BUILD_IMAGE
+#   script: mvn -B package -DskipTests        # MAVEN_ARGS is picked up by Maven 3.9+
+#   artifacts: { paths: [target/app.jar] }
+#
+# image:
+#   stage: image
+#   script:
+#     - docker build -t "$REGISTRY/apps/$SERVICE_KEY:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA" .
+#     - docker push   "$REGISTRY/apps/$SERVICE_KEY:$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+#
+# deploy:
+#   stage: deploy
+#   when: manual
+#   script: bump the tag for $SERVICE_KEY in the GitOps repo; Argo CD syncs it

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps-orders-api
+  namespace: argocd
+spec:
+  project: apps
+  source:
+    repoURL: https://gitlab.example.internal/platform/gitops.git
+    targetRevision: main
+    path: apps/orders-api
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=false

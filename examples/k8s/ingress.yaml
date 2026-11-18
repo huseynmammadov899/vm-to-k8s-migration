@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orders-api
+  namespace: apps
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: orders.corp.example   # the name clients ALREADY use (see docs/04)
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: orders-api
+                port:
+                  number: 8080

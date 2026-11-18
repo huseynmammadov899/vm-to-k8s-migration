@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-api
+  namespace: apps
+  labels:
+    app: orders-api
+spec:
+  replicas: 1                 # service has @Scheduled jobs → single writer (see docs/03)
+  strategy:
+    type: Recreate            # never two pods running jobs at the same time
+  selector:
+    matchLabels:
+      app: orders-api
+  template:
+    metadata:
+      labels:
+        app: orders-api
+    spec:
+      hostAliases:            # temporary, until DNS records exist (see docs/02)
+        - ip: "10.0.20.15"
+          hostnames: ["legacy-db.corp.example"]
+      containers:
+        - name: orders-api
+          image: nexus.example.internal:8083/apps/orders-api:main-1a2b3c4d
+          ports:
+            - name: http
+              containerPort: 9180   # whatever the app listened on the VM
+          envFrom:
+            - configMapRef:
+                name: orders-api-config
+            - secretRef:
+                name: orders-api-secrets   # last → wins (see docs/01)
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: test
+            - name: SCHEDULER_ENABLED
+              value: "false"        # flip to "true" after the VM is stopped
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orders-api-config
+  namespace: apps
+data:
+  JAVA_OPTS: "-XX:MaxRAMPercentage=75"
+  LOG_LEVEL: INFO
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-api
+  namespace: apps
+spec:
+  selector:
+    app: orders-api
+  ports:
+    - name: http
+      port: 8080              # standard Service port for every app (see docs/04)
+      targetPort: http

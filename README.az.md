@@ -19,12 +19,12 @@ ya da açıq xəta ilə sındı. Hər yazı eyni quruluşdadır: **əlamət → 
 flowchart LR
     subgraph Əvvəl
         C1[Müştərilər] --> H1[HAProxy]
-        H1 --> VM["Köhnə VM<br/>Tomcat / java -jar<br/>/etc/hosts, cron, sirli lokal konfiq"]
+        H1 --> VM["Köhnə VM<br/>Tomcat / java -jar<br/>/etc/hosts, cron, secret-li lokal konfiq"]
     end
     subgraph Sonra
         C2[Müştərilər] --> H2[HAProxy]
         H2 --> ING[Ingress controller]
-        ING --> POD["Pod<br/>image CI-dan<br/>sirlər Vault-dan"]
+        ING --> POD["Pod<br/>image CI-dan<br/>secret-lər Vault-dan"]
         GL[GitLab CI] -- "build, image push,<br/>tag yeniləmə" --> GIT[(GitOps repo)]
         GIT --> ARGO[Argo CD] --> POD
         V[Vault] -- External Secrets --> POD
@@ -40,7 +40,7 @@ sətri dəyişir, ona görə həm keçid, həm də geri qaytarma bir sətirlik d
 
 | # | Problem | Nə sındı | Həll |
 |---|---------|----------|------|
-| 1 | [Sirlər konfiq fayllarında idi](docs/az/01-konfiqdeki-sirler.md) | Parollar image-ə və ya repoya düşürdü | `${PLACEHOLDER}` + Vault + External Secrets Operator |
+| 1 | [Secret-lər konfiq fayllarında idi](docs/az/01-konfiqdeki-secretler.md) | Parollar image-ə və ya repoya düşürdü | `${PLACEHOLDER}` + Vault + External Secrets Operator |
 | 2 | [Gizli `/etc/hosts` asılılıqları](docs/az/02-gizli-host-asililiqlari.md) | `UnknownHostException` yalnız pod-da | Aşkarla → `hostAliases` (müvəqqəti) → DNS (daimi) |
 | 3 | [Scheduled job-lar iki dəfə işlədi](docs/az/03-tekrarlanan-scheduled-joblar.md) | Köhnə VM və yeni pod eyni bazaya yazdı | Tək yazıcı ilə keçid, `replicas: 1`, `Recreate`, ShedLock |
 | 4 | [Host header və ingress routing](docs/az/04-host-header-kecid.md) | HAProxy dəyişəndən sonra ingress 404 verdi | Ingress host = müştərinin istifadə etdiyi ad, `Host`-u dəyişmə |

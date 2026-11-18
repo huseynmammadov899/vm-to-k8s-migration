@@ -1,12 +1,12 @@
 [English](../01-secrets-in-config-files.md) | **Azərbaycanca**
 
-# 1. Sirlər konfiq fayllarında idi
+# 1. Secret-lər konfiq fayllarında idi
 
 ## Əlamət
 
 VM-də `application.properties` (və ya Tomcat-ın `context.xml` faylı) baza parollarını, API
 açarlarını və Redis məlumatlarını açıq mətn kimi saxlayırdı. Bu faylı Docker image-ə kopyalamaq
-bütün sirləri image registry-yə qoymaq deməkdir. Image-i çəkə bilən hər kəs onları oxuya bilər.
+bütün secret-ləri image registry-yə qoymaq deməkdir. Image-i çəkə bilən hər kəs onları oxuya bilər.
 
 ## Kök səbəb
 
@@ -43,7 +43,7 @@ spec:
 
 ```yaml
 envFrom:
-  - configMapRef: { name: orders-api-config }   # sirr olmayan default-lar
+  - configMapRef: { name: orders-api-config }   # secret olmayan default-lar
   - secretRef:    { name: orders-api-secrets }  # sonuncudur → toqquşmada qalib gəlir
 ```
 
@@ -55,7 +55,7 @@ envFrom:
   [Reloader](https://github.com/stakater/Reloader) bunu avtomatlaşdırır.
 - **Ortaq infrastrukturun host və portları** (Redis, baza) da values fayllarına yox, Vault-a getdi.
   Mühitlər fərqlidir və bütün qoşulma məlumatının bir yerdə olması review-ları sadələşdirdi.
-- **Debug edərkən sirri heç vaxt çap etmə.** Bunun əvəzinə uzunluğunu və ya hash-ini yoxla:
+- **Debug edərkən secret-i heç vaxt çap etmə.** Bunun əvəzinə uzunluğunu və ya hash-ini yoxla:
   `kubectl get secret x -o jsonpath='{.data.DB_PASSWORD}' | base64 -d | wc -c`
 
 ## Daha erkən necə tutmaq

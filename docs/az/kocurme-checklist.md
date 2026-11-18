@@ -7,7 +7,7 @@ Bunu hər servisin merge request təsvirinə kopyala.
 ## Aşkarlama (VM-də)
 - [ ] `scripts/vm-discovery.sh` işə salınıb və hesabat saxlanılıb
 - [ ] Java versiyası, işləmə növü (Spring Boot jar / Tomcat WAR), port, aktiv profil
-- [ ] Sirr saxlayan konfiq faylları siyahıya alınıb (dəyərlər **kopyalanmayıb**)
+- [ ] Secret saxlayan konfiq faylları siyahıya alınıb (dəyərlər **kopyalanmayıb**)
 - [ ] `/etc/hosts`-dakı standart olmayan sətirlər və onlardan hansılarını kodun həqiqətən istifadə etdiyi
 - [ ] Cron job-lar, `@Scheduled` metodlar və startup job-ları
 - [ ] Çıxan qoşulmalar (baza, Redis, tərəfdaş API-ləri, SMTP): pod şəbəkəsindən əlçatandırmı?
@@ -19,7 +19,7 @@ Bunu hər servisin merge request təsvirinə kopyala.
 - [ ] `finalName` təyin olunub; image daxili registry-yə push olunub
 
 ## Deploy
-- [ ] Sirlər Vault-da `apps/<servis>` yolundadır; konfiqdə placeholder-lər var
+- [ ] Secret-lər Vault-da `apps/<servis>` yolundadır; konfiqdə placeholder-lər var
 - [ ] Values faylı: image, `containerPort`, probe-lar (yalnız yoxlanmış path-lər), lazımdırsa `hostAliases`
 - [ ] Ingress host = müştərilərin artıq istifadə etdiyi ad
 - [ ] Servisin job-ları varsa `replicas: 1` + `Recreate`

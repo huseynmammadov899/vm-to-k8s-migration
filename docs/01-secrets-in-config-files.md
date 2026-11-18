@@ -1,4 +1,4 @@
-**English** | [Azərbaycanca](az/01-konfiqdeki-sirler.md)
+**English** | [Azərbaycanca](az/01-konfiqdeki-secretler.md)
 
 # 1. Secrets lived in config files
 

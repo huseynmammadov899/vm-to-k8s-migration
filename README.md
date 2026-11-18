@@ -86,7 +86,7 @@ HashiCorp Vault · External Secrets Operator · GitLab CI · Nexus · HAProxy
 ## Author
 
 **Huseyn Mammadov**, Linux/DevOps Engineer, RHCSA.
-[LinkedIn](https://www.linkedin.com/in/hsmammadov) · [Credly](https://www.credly.com/users/hsmammadov/)
+[LinkedIn](https://www.linkedin.com/in/huseynmemmedov/) · [Credly](https://www.credly.com/users/hsmammadov/)
 
 ## License
 
